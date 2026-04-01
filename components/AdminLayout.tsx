@@ -9,35 +9,43 @@ import { cn } from "@/lib/utils";
 import React, { useState } from "react";
 import { getNavItemsForRole, Role } from "@/lib/navigation-config";
 
+import { useAuth } from "@/hooks/use-auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
 interface AdminLayoutProps {
   children: React.ReactNode;
   role: Role;
-  userName: string;
-  userInitials: string;
 }
 
 export default function AdminLayout({
   children,
   role,
-  userName,
-  userInitials,
 }: AdminLayoutProps) {
   const pathname = usePathname();
+  const { user, logout, isLoading } = useAuth();
+  const router = useRouter();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const navItems = getNavItemsForRole(role);
+
+  useEffect(() => {
+    if (!isLoading && (!user || user.role !== role)) {
+      router.push('/login');
+    }
+  }, [user, role, isLoading, router]);
+
+  if (isLoading || !user || user.role !== role) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
+  const navItems = getNavItemsForRole(user.role);
 
   const isActive = (path: string) => {
     if (path === "/" || path === "") return pathname === path;
-    return pathname.startsWith(path);
-  };
-
-  const roleLabels: Record<Role, string> = {
-    admin: "System Administrator",
-    dg: "Director General",
-    director: "Training Director",
-    supervisor: "Operations Supervisor",
-    negotiator: "Lead Negotiator",
-    client: "Client Portal"
+    return pathname === path || pathname.startsWith(`${path}/`);
   };
 
   return (
@@ -56,9 +64,9 @@ export default function AdminLayout({
             </div>
             {isSidebarOpen && (
               <div className="flex flex-col">
-                <span className="font-display text-sm font-bold text-sidebar-primary leading-tight">SSGI Orbit</span>
-                <span className="text-[10px] uppercase tracking-widest text-sidebar-foreground/50 truncate w-40">
-                  {roleLabels[role]}
+                <span className="font-display text-sm font-bold text-sidebar-primary leading-tight tracking-tight">SSGI Orbit</span>
+                <span className="text-[10px] uppercase tracking-[0.2em] text-sidebar-foreground/40 font-bold truncate w-40">
+                  Secure Workspace
                 </span>
               </div>
             )}
@@ -71,17 +79,17 @@ export default function AdminLayout({
               key={item.title}
               href={item.href}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all group",
+                "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition-all group",
                 isActive(item.href)
                   ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
-                  : "text-sidebar-foreground/60 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  : "text-sidebar-foreground/50 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
               )}
             >
               <item.icon className={cn(
                 "h-5 w-5 shrink-0 transition-colors",
-                isActive(item.href) ? "text-sidebar-primary" : "text-sidebar-foreground/40 group-hover:text-sidebar-foreground"
+                isActive(item.href) ? "text-sidebar-primary" : "text-sidebar-foreground/30 group-hover:text-sidebar-foreground"
               )} />
-              {isSidebarOpen && <span className="truncate">{item.title}</span>}
+              {isSidebarOpen && <span className="truncate uppercase tracking-wider text-[11px]">{item.title}</span>}
               {isActive(item.href) && isSidebarOpen && (
                 <div className="ml-auto h-1.5 w-1.5 rounded-full bg-sidebar-primary shadow-[0_0_8px_hsl(var(--sidebar-primary))]" />
               )}
@@ -90,13 +98,13 @@ export default function AdminLayout({
         </nav>
 
         <div className="mt-auto border-t border-sidebar-border p-4">
-          <Link
-            href="/login"
-            className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium text-sidebar-foreground/60 hover:bg-destructive/10 hover:text-destructive transition-all group"
+          <button
+            onClick={logout}
+            className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold text-sidebar-foreground/50 hover:bg-destructive/10 hover:text-destructive transition-all group"
           >
-            <LogOut className="h-5 w-5 shrink-0 text-sidebar-foreground/40 group-hover:text-destructive" />
-            {isSidebarOpen && <span>Sign Out</span>}
-          </Link>
+            <LogOut className="h-5 w-5 shrink-0 text-sidebar-foreground/30 group-hover:text-destructive" />
+            {isSidebarOpen && <span className="uppercase tracking-wider text-[11px]">Sign Out</span>}
+          </button>
         </div>
       </aside>
 
@@ -122,7 +130,7 @@ export default function AdminLayout({
               <input 
                 type="text" 
                 placeholder="Search resources..." 
-                className="h-9 w-64 rounded-full border border-border/50 bg-muted/30 pl-10 pr-4 text-xs outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all"
+                className="h-9 w-64 rounded-full border border-border/50 bg-muted/30 pl-10 pr-4 text-[10px] uppercase font-bold tracking-widest outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/20 transition-all"
               />
             </div>
           </div>
@@ -136,11 +144,11 @@ export default function AdminLayout({
             
             <div className="flex items-center gap-3 pl-4 border-l border-border/50">
               <div className="text-right hidden sm:block">
-                <p className="text-sm font-bold text-foreground leading-tight">{userName}</p>
-                <p className="text-[10px] uppercase tracking-widest text-muted-foreground font-medium">{role}</p>
+                <p className="text-sm font-black text-foreground leading-tight">{user.name}</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">Authorized Access</p>
               </div>
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-xs font-bold text-primary ring-1 ring-primary/20">
-                {userInitials}
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-xs font-black text-primary ring-1 ring-primary/20 shadow-inner">
+                {user.initials}
               </div>
             </div>
           </div>
