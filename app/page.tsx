@@ -51,37 +51,31 @@ export default function LandingPage() {
 
         <div className="relative z-10 container mx-auto px-8">
           <div className="mx-auto max-w-5xl text-center space-y-12">
-            <div className="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-6 py-2.5 text-[10px] font-black uppercase tracking-[0.3em] text-primary backdrop-blur-xl ring-1 ring-white/5 animate-fade-in">
+            <div className="inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-6 py-3 text-[10px] font-black uppercase tracking-[0.3em] text-primary backdrop-blur-xl ring-1 ring-white/5 animate-fade-in">
               <Terminal className="h-3 w-3" />
-              Strategic Institutional Readiness System
+              Official Institutional Training Gateway
             </div>
             
-            <h1 className="font-display text-7xl font-black leading-[0.95] tracking-tighter md:text-[10rem] animate-slide-up">
-              <span className="text-foreground">DOMINATE</span>
+            <h1 className="font-display text-7xl font-black leading-[0.95] tracking-tighter md:text-[9rem] animate-slide-up">
+              <span className="text-foreground">AUTHORIZE</span>
               <br />
-              <span className="gold-text italic">THE ORBITAL</span>
+              <span className="gold-text italic text-[1.1em]">YOUR MISSION</span>
               <br />
-              <span className="text-foreground">FRONTIER.</span>
+              <span className="text-foreground">CAPACITY.</span>
             </h1>
 
-            <p className="mx-auto max-w-2xl text-lg text-muted-foreground/80 leading-relaxed font-bold tracking-tight opacity-0 animate-fade-in [animation-delay:400ms]">
-              The unified digital command for African space excellence. 
-              Authorizing critical training payloads for national agencies, research institutions, and mission specialists.
+            <p className="mx-auto max-w-2xl text-xl text-muted-foreground/80 leading-relaxed font-bold tracking-tight opacity-0 animate-fade-in [animation-delay:400ms]">
+              The centralized protocol for requesting advanced satellite and geospatial training. 
+              Submitting requests for national space agencies, government research nodes, and mission-critical personnel.
             </p>
 
             <div className="flex flex-col items-center justify-center gap-8 pt-8 sm:flex-row opacity-0 animate-fade-in [animation-delay:600ms]">
-              <Button asChild variant="gold" size="lg" className="h-20 px-16 rounded-2xl text-[11px] font-black uppercase tracking-[0.3em] shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all group active:scale-95">
-                <Link href="/apply" className="flex items-center gap-3">
-                  Start Mission Authorization
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-2" />
+              <Button asChild variant="gold" size="lg" className="h-24 px-20 rounded-[2rem] text-[12px] font-black uppercase tracking-[0.4em] shadow-[0_20px_80px_rgba(var(--primary),0.4)] hover:shadow-[0_30px_100px_rgba(var(--primary),0.6)] transition-all group active:scale-95">
+                <Link href="/apply" className="flex items-center gap-4">
+                  Request New Program
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-3" />
                 </Link>
               </Button>
-              <Link href="/login" className="flex items-center gap-4 text-[11px] font-black uppercase tracking-[0.3em] text-muted-foreground hover:text-foreground transition-all group">
-                <div className="h-14 w-14 rounded-2xl border border-border/50 flex items-center justify-center group-hover:bg-muted/50 group-hover:border-primary/20 transition-all">
-                  <Activity className="h-5 w-5" />
-                </div>
-                Enter Operations Dashboard
-              </Link>
             </div>
           </div>
         </div>

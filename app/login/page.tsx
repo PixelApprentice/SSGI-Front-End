@@ -65,22 +65,22 @@ export default function Login() {
       <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-[hsl(var(--navy-deep))] p-12 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-50" />
         <div className="flex items-center justify-between relative z-10">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 backdrop-blur-xl ring-1 ring-primary/30">
-              <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-6 w-6" />
+          <div className="flex items-center gap-5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/20 backdrop-blur-xl ring-2 ring-primary/30 shadow-2xl shadow-primary/20 transition-transform hover:scale-110">
+              <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-10 w-10 object-contain" />
             </div>
             <div>
-              <span className="font-display text-xl font-bold gold-text block leading-tight tracking-tight">SSGI Orbit</span>
-              <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Enterprise Training</span>
+              <span className="font-display text-2xl font-black gold-text block leading-none tracking-tighter uppercase italic">SSGI Orbit</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/50 font-black mt-1 block">Training Request Authority</span>
             </div>
           </div>
           {mounted && (
             <button 
               type="button" 
               onClick={() => setTheme(theme === "light" ? "dark" : "light")} 
-              className="rounded-xl p-2.5 bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 transition-all duration-300"
+              className="rounded-2xl p-3 bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 transition-all duration-300"
             >
-              {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </button>
           )}
         </div>
@@ -88,13 +88,14 @@ export default function Login() {
         <div className="max-w-md relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-6 backdrop-blur-md">
             <Shield className="h-3 w-3" />
-            Secure Enterprise Gateway
+            Secure Institutional Gateway
           </div>
-          <h1 className="font-display text-5xl font-extrabold text-white mb-6 leading-tight tracking-tight drop-shadow-sm">
-            Elevate Your <span className="gold-text">Operational</span> Capabilities
+          <h1 className="font-display text-6xl font-black text-white mb-6 leading-[1.1] tracking-tighter drop-shadow-sm uppercase italic">
+            Manage Your <br />
+            <span className="gold-text">Mission</span> Capacity
           </h1>
-          <p className="text-white/80 text-lg leading-relaxed font-bold tracking-tight">
-            Access elite satellite training programs, track complex negotiations, and manage your mission-critical agreements from one secure hub.
+          <p className="text-white/80 text-xl leading-relaxed font-bold tracking-tight">
+            The professional terminal for authorized personnel to process training requests, technical agreements, and institutional readiness protocols.
           </p>
         </div>
 
