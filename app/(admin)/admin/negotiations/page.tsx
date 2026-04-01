@@ -1,84 +1,93 @@
 "use client";
 
-import { Handshake, ChevronRight, CheckCircle2, Clock, MessageSquare } from "lucide-react";
+import { Handshake, Search, Filter, ArrowUpRight, ShieldCheck, DollarSign, Activity } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-const negotiations = [
-  { id: "TRQ-2026-0042", org: "Kenya Space Agency", program: "Satellite Operations & Control", round: 2, approved: 1, pending: 1, review: 1, value: "$25,200", updated: "2 hours ago", status: "active" },
-  { id: "TRQ-2026-0044", org: "Ghana Space Agency", program: "Satellite Data Processing", round: 1, approved: 0, pending: 2, review: 0, value: "$6,200", updated: "1 day ago", status: "pending" },
-  { id: "TRQ-2026-0041", org: "South Africa SANSA", program: "Remote Sensing Advanced", round: 1, approved: 0, pending: 3, review: 0, value: "$12,800", updated: "3 days ago", status: "pending" },
-  { id: "TRQ-2026-0038", org: "Nigerian NASRDA", program: "Remote Sensing & GIS", round: 3, approved: 4, pending: 0, review: 0, value: "$18,500", updated: "1 week ago", status: "completed" },
+const globalPipelines = [
+  { id: "TRQ-0042", org: "Kenya Space Agency", program: "Satellite Operations", stage: "TMA Review", lead: "Dawit Kebede", value: "$25K" },
+  { id: "TRQ-0044", org: "Ghana Space Agency", program: "Data Processing", stage: "Initial Draft", lead: "Henok Girma", value: "$12K" },
+  { id: "TRQ-0041", org: "South Africa SANSA", program: "Remote Sensing", stage: "Finalized", lead: "Sara Tekle", value: "$18K" },
 ];
-
-const statusStyles: Record<string, string> = {
-  active: "bg-primary/10 text-primary",
-  completed: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400",
-  pending: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400",
-};
 
 export default function AdminNegotiations() {
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl font-bold text-foreground">Negotiations</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage pricing, terms, and agreements across all organizations</p>
+    <div className="space-y-10 animate-fade-in">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <div>
+          <h1 className="font-display text-4xl font-black text-foreground tracking-tight">Global Pipelines</h1>
+          <p className="text-muted-foreground font-medium mt-2">Executive oversight of all active financial and technical negotiations.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="relative group">
+            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" />
+            <input 
+              className="h-12 w-64 bg-muted/30 border border-border/50 rounded-2xl px-12 text-sm font-medium outline-none focus:ring-2 focus:ring-primary/20 transition-all" 
+              placeholder="Search pipelines..." 
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {[
-          { label: "Active Negotiations", value: "3" },
-          { label: "Pending Items", value: "6" },
-          { label: "Approved Items", value: "5" },
-          { label: "Total Pipeline Value", value: "$62,700" },
-        ].map((s) => (
-          <div key={s.label} className="glass-card p-5">
-            <p className="text-xs text-muted-foreground uppercase tracking-wider">{s.label}</p>
-            <p className="font-display text-2xl font-bold text-foreground mt-1">{s.value}</p>
+          { label: "Aggregate Pipeline Value", value: "$55K", icon: DollarSign, color: "text-emerald-500", bg: "bg-emerald-500/10" },
+          { label: "Active Technical Reviews", value: "03", icon: Activity, color: "text-primary", bg: "bg-primary/10" },
+          { label: "Negotiator Utilization", value: "85%", icon: ShieldCheck, color: "text-blue-500", bg: "bg-blue-500/10" },
+        ].map((s, i) => (
+          <div key={i} className="glass-card p-8 group">
+            <div className={cn("flex h-12 w-12 items-center justify-center rounded-2xl ring-1 ring-white/5 mb-6 group-hover:rotate-6 transition-transform", s.bg)}>
+              <s.icon className={cn("h-6 w-6", s.color)} />
+            </div>
+            <p className="font-display text-4xl font-black text-foreground leading-none">{s.value}</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mt-3">{s.label}</p>
           </div>
         ))}
       </div>
 
       <div className="glass-card overflow-hidden">
-        <div className="px-6 py-4 border-b border-border">
-          <h3 className="font-display text-lg font-bold text-foreground">Negotiation Rounds</h3>
-        </div>
-        <div className="divide-y divide-border">
-          {negotiations.map((neg) => (
-            <div key={neg.id} className="flex items-center justify-between px-6 py-4 hover:bg-muted/50 transition-colors cursor-pointer">
-              <div className="flex items-center gap-4">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                  <Handshake className="h-5 w-5 text-primary" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="text-sm font-semibold text-foreground">{neg.id}</span>
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyles[neg.status]}`}>
-                      Round {neg.round}
-                    </span>
+        <table className="w-full">
+          <thead>
+            <tr className="border-b border-border/50 bg-muted/30">
+              <th className="px-8 py-5 text-left text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Mission Identity</th>
+              <th className="px-8 py-5 text-left text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Lead Negotiator</th>
+              <th className="px-8 py-5 text-left text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Current Phase</th>
+              <th className="px-8 py-5 text-left text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Asset Value</th>
+              <th className="px-8 py-5 text-right text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Control</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border/50">
+            {globalPipelines.map((p, i) => (
+              <tr key={i} className="group hover:bg-muted/30 transition-colors">
+                <td className="px-8 py-6">
+                  <div>
+                    <p className="text-sm font-bold text-foreground leading-tight">{p.org}</p>
+                    <p className="text-[10px] font-bold text-muted-foreground/60 mt-1">{p.id} · {p.program}</p>
                   </div>
-                  <p className="text-sm text-muted-foreground">{neg.org} — {neg.program}</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-6">
-                <div className="flex items-center gap-3 text-xs">
-                  <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-                    <CheckCircle2 className="h-3 w-3" /> {neg.approved}
-                  </span>
-                  <span className="flex items-center gap-1 text-primary">
-                    <Clock className="h-3 w-3" /> {neg.pending}
-                  </span>
-                  <span className="flex items-center gap-1 text-muted-foreground">
-                    <MessageSquare className="h-3 w-3" /> {neg.review}
-                  </span>
-                </div>
-                <div className="text-right">
-                  <p className="text-sm font-semibold text-foreground">{neg.value}</p>
-                  <p className="text-xs text-muted-foreground">{neg.updated}</p>
-                </div>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
-              </div>
-            </div>
-          ))}
-        </div>
+                </td>
+                <td className="px-8 py-6">
+                  <div className="flex items-center gap-2">
+                    <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center text-[10px] font-black text-primary">
+                      {p.lead.split(' ').map(n => n[0]).join('')}
+                    </div>
+                    <span className="text-sm font-bold text-foreground/80">{p.lead}</span>
+                  </div>
+                </td>
+                <td className="px-8 py-6">
+                  <span className="px-3 py-1 rounded-full bg-primary/10 text-[10px] font-black uppercase tracking-widest text-primary ring-1 ring-primary/20">{p.stage}</span>
+                </td>
+                <td className="px-8 py-6">
+                  <p className="text-sm font-black text-emerald-500">{p.value}</p>
+                </td>
+                <td className="px-8 py-6 text-right">
+                  <Button variant="ghost" size="icon" className="h-10 w-10 rounded-xl hover:bg-primary/10 hover:text-primary transition-all">
+                    <ArrowUpRight className="h-5 w-5" />
+                  </Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
