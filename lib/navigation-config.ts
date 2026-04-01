@@ -22,77 +22,85 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    title: "Overview",
-    href: "/dashboard",
+    title: "Workspace",
+    href: "/dashboard", // This will be mapped to role root
     icon: LayoutDashboard,
     roles: ['admin', 'dg', 'director', 'supervisor', 'negotiator'],
   },
   {
     title: "Approvals",
-    href: "/dg/approvals",
+    href: "/approvals",
     icon: FileCheck,
     roles: ['dg', 'admin'],
   },
   {
-    title: "Staff Management",
-    href: "/admin/staff",
+    title: "Personnel",
+    href: "/staff",
     icon: Users,
     roles: ['admin', 'director'],
   },
   {
-    title: "Training Requests",
-    href: "/admin/requests",
+    title: "Missions",
+    href: "/requests",
     icon: ClipboardList,
     roles: ['admin', 'director', 'dg'],
   },
   {
     title: "Negotiations",
-    href: "/negotiator/deals",
+    href: "/negotiations",
     icon: Briefcase,
     roles: ['negotiator', 'supervisor', 'admin'],
   },
   {
-    title: "Communications",
-    href: "/negotiator/comms",
+    title: "Channels",
+    href: "/comms",
     icon: MessageSquare,
     roles: ['negotiator', 'admin'],
   },
   {
-    title: "Agreements",
-    href: "/dg/agreements",
+    title: "Ledger",
+    href: "/agreements",
     icon: FileText,
-    roles: ['dg', 'admin', 'director'],
+    roles: ['dg', 'admin', 'director', 'supervisor'],
   },
   {
-    title: "Reports",
-    href: "/admin/reports",
+    title: "Analytics",
+    href: "/reports",
     icon: BarChart3,
     roles: ['admin', 'dg', 'director'],
   },
   {
-    title: "History",
-    href: "/supervisor/history",
+    title: "Audit Trail",
+    href: "/history",
     icon: History,
-    roles: ['supervisor', 'admin'],
+    roles: ['supervisor', 'admin', 'director'],
   },
   {
-    title: "Settings",
-    href: "/admin/settings",
+    title: "User Control",
+    href: "/users",
+    icon: Users,
+    roles: ['admin'],
+  },
+  {
+    title: "Configuration",
+    href: "/settings",
     icon: Settings,
     roles: ['admin', 'director'],
   },
 ];
 
 export const getNavItemsForRole = (role: Role) => {
-  // Map specific paths to role-friendly names if needed
+  const roleRoot = role === 'client' ? '/dashboard' : `/${role}`;
+  
   return NAV_ITEMS.filter(item => item.roles.includes(role)).map(item => {
     let href = item.href;
-    // Adjust href based on role prefix if necessary
-    if (role === 'dg' && href.startsWith('/admin')) href = href.replace('/admin', '/dg');
-    if (role === 'director' && href.startsWith('/admin')) href = href.replace('/admin', '/director');
-    if (role === 'supervisor' && href.startsWith('/admin')) href = href.replace('/admin', '/supervisor');
-    if (role === 'negotiator' && href.startsWith('/admin')) href = href.replace('/admin', '/negotiator');
     
-    return { ...item, href };
+    // Map Workspace to the root of the role
+    if (href === "/dashboard") {
+      return { ...item, href: roleRoot };
+    }
+    
+    // Prefix other routes with role root to ensure isolation
+    return { ...item, href: `${roleRoot}${href}` };
   });
 };

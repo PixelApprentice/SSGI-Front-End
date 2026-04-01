@@ -18,23 +18,46 @@ const roles = [
   { id: "admin", label: "Administrator", path: "/admin", description: "System admin" },
 ];
 
+import { useAuth } from "@/hooks/use-auth";
+import { useToast } from "@/hooks/use-toast";
+
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedRole, setSelectedRole] = useState("client");
+  const { login } = useAuth();
+  const { toast } = useToast();
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    console.log("Login page mounted");
     setMounted(true);
   }, []);
 
-  const handleRoleSelection = (roleId: string) => {
-    console.log("Role selection clicked:", roleId);
-    setSelectedRole(roleId);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    
+    try {
+      const success = await login(email, password);
+      if (!success) {
+        toast({
+          title: "Access Denied",
+          description: "Invalid account identifier or access key.",
+          variant: "destructive"
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "System Error",
+        description: "Unable to reach the security gateway.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
-
-  const currentRole = roles.find((r) => r.id === selectedRole)!;
 
   return (
     <div className="flex min-h-screen">
@@ -98,17 +121,20 @@ export default function Login() {
           <div className="mb-10">
             <h2 className="font-display text-3xl font-extrabold text-foreground mb-2 tracking-tight">Sign In</h2>
             <p className="text-sm text-muted-foreground font-medium">
-              Enter your credentials to access the portal
+              Enter your credentials to access the workspace
             </p>
           </div>
 
-          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70 ml-1">Account Identifier</Label>
               <Input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="identifier@ssgi.gov.et"
                 className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm focus:ring-primary/20 transition-all"
+                required
               />
             </div>
 
@@ -120,8 +146,11 @@ export default function Login() {
               <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm pr-12 focus:ring-primary/20 transition-all"
+                  required
                 />
                 <button
                   type="button"
@@ -133,31 +162,13 @@ export default function Login() {
               </div>
             </div>
 
-            {/* Role Selection (Simplified/Hidable for production, but kept here for demo with better styling) */}
-            <div className="space-y-3 pt-2">
-              <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70 ml-1">System Role</Label>
-              <div className="grid grid-cols-2 gap-2">
-                {mounted && roles.map((role) => (
-                  <button
-                    key={role.id}
-                    type="button"
-                    onClick={() => handleRoleSelection(role.id)}
-                    className={`rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 ${
-                      selectedRole === role.id
-                        ? "border-primary bg-primary/10 text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]"
-                        : "border-border/50 text-muted-foreground/60 hover:bg-muted/50 hover:text-foreground"
-                    }`}
-                  >
-                    {role.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <Button asChild variant="gold" className="w-full h-14 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 mt-4">
-              <Link href={currentRole.path}>
-                Authorize Access
-              </Link>
+            <Button 
+              type="submit" 
+              variant="gold" 
+              className="w-full h-14 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 mt-4"
+              disabled={isLoading}
+            >
+              {isLoading ? "Authorizing..." : "Authorize Access"}
             </Button>
           </form>
 
