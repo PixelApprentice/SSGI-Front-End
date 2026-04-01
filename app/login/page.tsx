@@ -86,25 +86,25 @@ export default function Login() {
         </div>
 
         <div className="max-w-md relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/20 px-4 py-1.5 text-xs font-bold text-primary mb-6 backdrop-blur-md">
             <Shield className="h-3 w-3" />
             Secure Enterprise Gateway
           </div>
-          <h1 className="font-display text-5xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+          <h1 className="font-display text-5xl font-extrabold text-white mb-6 leading-tight tracking-tight drop-shadow-sm">
             Elevate Your <span className="gold-text">Operational</span> Capabilities
           </h1>
-          <p className="text-white/60 text-lg leading-relaxed font-medium">
+          <p className="text-white/80 text-lg leading-relaxed font-bold tracking-tight">
             Access elite satellite training programs, track complex negotiations, and manage your mission-critical agreements from one secure hub.
           </p>
         </div>
 
         <div className="flex items-center gap-4 relative z-10">
-          <div className="flex items-center gap-2 text-xs font-semibold text-white/40 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[10px] font-black text-white/60 uppercase tracking-[0.2em]">
             <Shield className="h-4 w-4 text-primary" />
             <span>Secure Access Control</span>
           </div>
-          <div className="h-1 w-1 rounded-full bg-white/20" />
-          <div className="text-xs font-semibold text-white/40 uppercase tracking-widest">
+          <div className="h-1 w-1 rounded-full bg-white/40" />
+          <div className="text-[10px] font-black text-white/60 uppercase tracking-[0.2em]">
             <span>SOC 2 Type II</span>
           </div>
         </div>
@@ -120,28 +120,28 @@ export default function Login() {
 
           <div className="mb-10">
             <h2 className="font-display text-3xl font-extrabold text-foreground mb-2 tracking-tight">Sign In</h2>
-            <p className="text-sm text-muted-foreground font-medium">
+            <p className="text-sm text-muted-foreground font-bold">
               Enter your credentials to access the workspace
             </p>
           </div>
 
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
-              <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70 ml-1">Account Identifier</Label>
+              <Label className="text-[10px] uppercase tracking-[0.2em] font-black text-foreground/80 ml-1">Account Identifier</Label>
               <Input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="identifier@ssgi.gov.et"
-                className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm focus:ring-primary/20 transition-all"
+                className="h-12 bg-muted/50 border-border rounded-xl px-4 text-sm font-bold focus:ring-primary/20 transition-all"
                 required
               />
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between ml-1">
-                <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70">Access Key</Label>
-                <button type="button" className="text-[10px] uppercase tracking-widest font-bold text-primary hover:text-primary/80 transition-colors">Recover Access</button>
+                <Label className="text-[10px] uppercase tracking-[0.2em] font-black text-foreground/80">Access Key</Label>
+                <button type="button" className="text-[10px] uppercase tracking-widest font-black text-primary hover:text-primary/80 transition-colors">Recover Access</button>
               </div>
               <div className="relative">
                 <Input
@@ -149,7 +149,7 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm pr-12 focus:ring-primary/20 transition-all"
+                  className="h-12 bg-muted/50 border-border rounded-xl px-4 text-sm font-bold pr-12 focus:ring-primary/20 transition-all"
                   required
                 />
                 <button
