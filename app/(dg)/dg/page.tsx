@@ -1,5 +1,3 @@
-"use client";
-
 import {
   FileCheck,
   Users,
@@ -7,122 +5,127 @@ import {
   CheckCircle2,
   AlertCircle,
   ArrowUpRight,
-  ThumbsUp,
-  ThumbsDown,
+  TrendingUp,
+  ShieldCheck,
+  Zap
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
-  { label: "Pending Approvals", value: "4", change: "2 urgent", icon: Clock, trend: "alert" },
-  { label: "Approved This Month", value: "6", change: "+2 from last month", icon: CheckCircle2, trend: "up" },
-  { label: "Active Agreements", value: "8", change: "$142,000 total", icon: FileCheck, trend: "up" },
-  { label: "Total Staff", value: "12", change: "All assigned", icon: Users, trend: "neutral" },
+  { label: "Pending Executive Review", value: "04", icon: Clock, trend: "alert", color: "text-amber-500", bg: "bg-amber-500/10" },
+  { label: "Approved Programs", value: "06", icon: CheckCircle2, trend: "up", color: "text-emerald-500", bg: "bg-emerald-500/10" },
+  { label: "Total Asset Value", value: "$142K", icon: Zap, trend: "up", color: "text-primary", bg: "bg-primary/10" },
+  { label: "Operational Staff", value: "12", icon: Users, trend: "neutral", color: "text-blue-500", bg: "bg-blue-500/10" },
 ];
 
 const pendingApprovals = [
   { id: "TRQ-2026-0044", org: "Ghana Space Agency", program: "Satellite Data Processing", trainees: 10, value: "$6,200", submitted: "2026-03-25", days: 6 },
   { id: "TRQ-2026-0047", org: "Cameroon Space Agency", program: "Remote Sensing Basics", trainees: 15, value: "$8,500", submitted: "2026-03-27", days: 4 },
-  { id: "TRQ-2026-0048", org: "Senegal ASAL", program: "GIS & Mapping", trainees: 8, value: "$5,100", submitted: "2026-03-28", days: 3 },
-  { id: "TRQ-2026-0049", org: "Côte d'Ivoire SODEXAM", program: "Weather Satellite Ops", trainees: 12, value: "$9,800", submitted: "2026-03-30", days: 1 },
-];
-
-const recentDecisions = [
-  { id: "TRQ-2026-0046", org: "Tanzania Space Agency", decision: "approved", date: "2026-03-28" },
-  { id: "TRQ-2026-0042", org: "Kenya Space Agency", decision: "approved", date: "2026-03-15" },
-  { id: "TRQ-2026-0043", org: "Algeria ASAL", decision: "rejected", date: "2026-03-10" },
-  { id: "TRQ-2026-0041", org: "South Africa SANSA", decision: "approved", date: "2026-03-12" },
 ];
 
 export default function DGDashboard() {
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl font-bold text-foreground">DG Dashboard</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Executive overview — {new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-        </p>
+    <div className="space-y-10 animate-fade-in">
+      <div className="flex items-end justify-between">
+        <div>
+          <h1 className="font-display text-4xl font-black text-foreground tracking-tight">Executive Dashboard</h1>
+          <p className="text-muted-foreground font-medium mt-2">Director General Overview — {new Date().toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}</p>
+        </div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
+          <ShieldCheck className="h-6 w-6 text-primary" />
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {stats.map((s) => (
-          <div key={s.label} className="glass-card p-5">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                <s.icon className="h-5 w-5 text-primary" />
-              </div>
-              {s.trend === "up" && <ArrowUpRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
-              {s.trend === "alert" && <AlertCircle className="h-4 w-4 text-amber-500" />}
+          <div key={s.label} className="glass-card p-8 group transition-all duration-500 hover:border-primary/30">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${s.bg} ring-1 ring-white/5 mb-6 group-hover:rotate-6 transition-transform`}>
+              <s.icon className={`h-6 w-6 ${s.color}`} />
             </div>
-            <p className="font-display text-2xl font-bold text-foreground">{s.value}</p>
-            <p className="text-xs text-muted-foreground mt-1">{s.change}</p>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="font-display text-4xl font-black text-foreground leading-none">{s.value}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mt-3">{s.label}</p>
+              </div>
+              {s.trend === "up" && <ArrowUpRight className="h-5 w-5 text-emerald-500" />}
+              {s.trend === "alert" && <AlertCircle className="h-5 w-5 text-amber-500 animate-pulse" />}
+            </div>
           </div>
         ))}
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        {/* Pending Approvals */}
-        <div className="col-span-2 glass-card overflow-hidden">
-          <div className="px-6 py-4 border-b border-border">
-            <h3 className="font-display text-lg font-bold text-foreground">Pending Your Approval</h3>
-          </div>
-          <div className="divide-y divide-border">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Pending Approvals Section */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
+            <TrendingUp className="h-5 w-5 text-primary" />
+            Executive Queue
+          </h2>
+          <div className="space-y-4">
             {pendingApprovals.map((req) => (
-              <div key={req.id} className="px-6 py-4 hover:bg-muted/50 transition-colors">
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-semibold text-foreground">{req.id}</span>
-                      {req.days >= 5 && (
-                        <span className="rounded-full bg-destructive/10 px-2 py-0.5 text-[10px] font-bold uppercase text-destructive">
-                          Overdue
-                        </span>
-                      )}
+              <div key={req.id} className="glass-card p-8 group transition-all duration-500 hover:border-primary/30">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex items-start gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors">
+                      <FileCheck className="h-6 w-6 text-muted-foreground group-hover:text-primary transition-colors" />
                     </div>
-                    <p className="text-sm text-muted-foreground mt-0.5">{req.program} — {req.org}</p>
+                    <div>
+                      <div className="flex items-center gap-3 mb-1.5">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">{req.id}</span>
+                        {req.days >= 5 && (
+                          <span className="px-2 py-0.5 rounded-full bg-destructive/10 text-[8px] font-black uppercase tracking-widest text-destructive animate-pulse">Critical Review</span>
+                        )}
+                      </div>
+                      <h3 className="font-display text-xl font-black text-foreground tracking-tight">{req.program}</h3>
+                      <p className="text-sm font-medium text-muted-foreground mt-1">{req.org}</p>
+                    </div>
                   </div>
-                  <div className="text-right text-xs text-muted-foreground">
-                    <p>{req.trainees} trainees · {req.value}</p>
-                    <p>{req.days} days pending</p>
+                  <div className="flex items-center gap-4 border-l border-border/50 pl-8">
+                    <div className="text-right">
+                      <p className="text-sm font-black text-foreground leading-tight">{req.value}</p>
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground mt-1">{req.days} Days Pending</p>
+                    </div>
+                    <div className="flex gap-2 ml-4">
+                      <Button variant="outline" className="h-11 rounded-xl px-4 border-border/50 hover:bg-destructive/10 hover:text-destructive hover:border-destructive/20 transition-all font-bold text-[10px] uppercase tracking-widest">Reject</Button>
+                      <Button variant="gold" className="h-11 rounded-xl px-6 font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20">Authorize</Button>
+                    </div>
                   </div>
-                </div>
-                <div className="flex justify-end gap-2">
-                  <Button variant="outline" size="sm" className="text-xs gap-1">
-                    <ThumbsDown className="h-3 w-3" /> Reject
-                  </Button>
-                  <Button variant="gold" size="sm" className="text-xs gap-1">
-                    <ThumbsUp className="h-3 w-3" /> Approve
-                  </Button>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Recent Decisions */}
-        <div className="glass-card overflow-hidden">
-          <div className="px-5 py-4 border-b border-border">
-            <h3 className="font-display text-base font-bold text-foreground">Recent Decisions</h3>
-          </div>
-          <div className="divide-y divide-border">
-            {recentDecisions.map((d) => (
-              <div key={d.id} className="px-5 py-3.5 flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-foreground">{d.id}</p>
-                  <p className="text-xs text-muted-foreground">{d.org}</p>
+        {/* Recent Activity Log */}
+        <div className="space-y-6">
+          <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest">History</h2>
+          <div className="glass-card overflow-hidden">
+            <div className="divide-y divide-border/50">
+              {[
+                { id: "TRQ-0046", org: "Tanzania Space Agency", status: "Approved", date: "Mar 28" },
+                { id: "TRQ-0042", org: "Kenya Space Agency", status: "Approved", date: "Mar 15" },
+                { id: "TRQ-0043", org: "Algeria ASAL", status: "Rejected", date: "Mar 10" },
+              ].map((log) => (
+                <div key={log.id} className="p-6 hover:bg-muted/30 transition-colors">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground/60">{log.id}</span>
+                    <span className="text-[10px] font-bold text-muted-foreground">{log.date}</span>
+                  </div>
+                  <p className="text-sm font-bold text-foreground leading-tight truncate">{log.org}</p>
+                  <span className={cn(
+                    "inline-block mt-3 text-[8px] font-black uppercase tracking-[0.2em] px-2 py-0.5 rounded-full",
+                    log.status === 'Approved' ? "bg-emerald-500/10 text-emerald-500" : "bg-destructive/10 text-destructive"
+                  )}>{log.status}</span>
                 </div>
-                <span className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                  d.decision === "approved"
-                    ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400"
-                    : "bg-destructive/10 text-destructive"
-                }`}>
-                  {d.decision === "approved" ? "Approved" : "Rejected"}
-                </span>
-              </div>
-            ))}
+              ))}
+            </div>
+            <Button variant="ghost" className="w-full h-12 rounded-none text-[10px] font-bold uppercase tracking-widest text-muted-foreground hover:text-primary">View Comprehensive Logs</Button>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+import { cn } from "@/lib/utils";
