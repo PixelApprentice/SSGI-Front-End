@@ -1,31 +1,15 @@
 "use client";
 
-import SidebarLayout from "@/components/SidebarLayout";
-import {
-  LayoutDashboard,
-  ClipboardCheck,
-  FileText,
-  Users,
-} from "lucide-react";
+import AdminLayout from "@/components/AdminLayout";
 
-const sidebarItems = [
-  { icon: LayoutDashboard, label: "Overview", path: "/supervisor" },
-  { icon: ClipboardCheck, label: "Agreements", path: "/supervisor/agreements" },
-  { icon: FileText, label: "Documents", path: "/supervisor/documents" },
-  { icon: Users, label: "Trainees", path: "/supervisor/trainees" },
-];
-
-export default function SupervisorLayout({ children }: { children: React.ReactNode }) {
+export default function SupervisorPortalLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SidebarLayout
-      items={sidebarItems}
-      portalName="Supervisor"
+    <AdminLayout
+      role="supervisor"
       userName="Meseret Hailu"
-      userRole="Senior Supervisor"
       userInitials="MH"
-      headerTitle="Agreement Oversight"
     >
       {children}
-    </SidebarLayout>
+    </AdminLayout>
   );
 }
