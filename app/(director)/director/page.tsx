@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   FileText,
@@ -9,14 +7,17 @@ import {
   Clock,
   Handshake,
   TrendingUp,
+  Activity,
+  Zap,
+  LayoutGrid
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const stats = [
-  { label: "Total Requests", value: "24", change: "+3 this month", icon: FileText, trend: "up" },
-  { label: "Pending Assignment", value: "6", change: "Needs attention", icon: Clock, trend: "alert" },
-  { label: "Active Negotiations", value: "7", change: "2 nearing close", icon: Handshake, trend: "neutral" },
-  { label: "Staff Utilization", value: "78%", change: "+5% from last month", icon: TrendingUp, trend: "up" },
+  { label: "Total Missions", value: "24", icon: FileText, trend: "up", color: "text-primary", bg: "bg-primary/10" },
+  { label: "Awaiting Assignment", value: "06", icon: Clock, trend: "alert", color: "text-amber-500", bg: "bg-amber-500/10" },
+  { label: "Active Pipelines", value: "07", icon: Handshake, trend: "neutral", color: "text-blue-500", bg: "bg-blue-500/10" },
+  { label: "Asset Utilization", value: "78%", icon: Zap, trend: "up", color: "text-emerald-500", bg: "bg-emerald-500/10" },
 ];
 
 const pipeline = [
@@ -27,140 +28,144 @@ const pipeline = [
   { stage: "Finalized", count: 4, color: "bg-emerald-500" },
 ];
 
-const pendingAssignments = [
-  { id: "TRQ-2026-0044", org: "Ghana Space Agency", program: "Satellite Data Processing", submitted: "2026-03-25", priority: "high" },
-  { id: "TRQ-2026-0041", org: "South Africa SANSA", program: "Remote Sensing Advanced", submitted: "2026-03-12", priority: "high" },
-  { id: "TRQ-2026-0046", org: "Tanzania Space Agency", program: "Ground Station Ops", submitted: "2026-03-28", priority: "medium" },
-];
-
-const staffOverview = [
-  { name: "Meseret Hailu", role: "Supervisor", activeRequests: 3, capacity: 5, status: "available" },
-  { name: "Dawit Kebede", role: "Negotiator", activeRequests: 4, capacity: 5, status: "busy" },
-  { name: "Tigist Alemayehu", role: "Supervisor", activeRequests: 2, capacity: 5, status: "available" },
-  { name: "Henok Girma", role: "Negotiator", activeRequests: 5, capacity: 5, status: "full" },
-];
-
-const escalations = [
-  { text: "TRQ-2026-0039 — DG approval pending for 5 days", type: "delay", time: "2 hours ago" },
-  { text: "Negotiator Henok at full capacity — reassignment needed", type: "capacity", time: "1 day ago" },
-  { text: "TRQ-2026-0036 — Client unresponsive for 10 days", type: "bottleneck", time: "3 days ago" },
-];
-
 export default function DirectorDashboard() {
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="font-display text-2xl font-bold text-foreground">Training Director Hub</h1>
-        <p className="text-sm text-muted-foreground mt-1">
-          Central operations dashboard — {new Date().toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })}
-        </p>
+    <div className="space-y-10 animate-fade-in">
+      <div className="flex items-end justify-between">
+        <div>
+          <h1 className="font-display text-4xl font-black text-foreground tracking-tight">Operations Hub</h1>
+          <p className="text-muted-foreground font-medium mt-2">Training Director — Central Mission Orchestration</p>
+        </div>
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
+          <LayoutGrid className="h-6 w-6 text-primary" />
+        </div>
       </div>
 
-      {/* Stats */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         {stats.map((s) => (
-          <div key={s.label} className="glass-card p-5">
-            <div className="flex items-center justify-between mb-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                <s.icon className="h-5 w-5 text-primary" />
-              </div>
-              {s.trend === "up" && <ArrowUpRight className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />}
-              {s.trend === "alert" && <AlertTriangle className="h-4 w-4 text-amber-500" />}
+          <div key={s.label} className="glass-card p-8 group transition-all duration-500 hover:border-primary/30">
+            <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${s.bg} ring-1 ring-white/5 mb-6 group-hover:rotate-6 transition-transform`}>
+              <s.icon className={`h-6 w-6 ${s.color}`} />
             </div>
-            <p className="font-display text-2xl font-bold text-foreground">{s.value}</p>
-            <p className="text-xs text-muted-foreground mt-1">{s.change}</p>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="font-display text-4xl font-black text-foreground leading-none">{s.value}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60 mt-3">{s.label}</p>
+              </div>
+              {s.trend === "up" && <ArrowUpRight className="h-5 w-5 text-emerald-500" />}
+              {s.trend === "alert" && <AlertTriangle className="h-5 w-5 text-amber-500 animate-pulse" />}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Pipeline Visualization */}
-      <div className="glass-card p-6 mb-6">
-        <h3 className="font-display text-lg font-bold text-foreground mb-4">Request Pipeline</h3>
-        <div className="flex items-end gap-3 h-32">
-          {pipeline.map((p) => (
-            <div key={p.stage} className="flex-1 flex flex-col items-center gap-2">
-              <span className="text-sm font-bold text-foreground">{p.count}</span>
-              <div className={`w-full rounded-t-lg ${p.color} transition-all`} style={{ height: `${(p.count / 7) * 80}px` }} />
-              <span className="text-[11px] text-muted-foreground text-center">{p.stage}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-6">
-        {/* Pending Assignments */}
-        <div className="col-span-2 glass-card overflow-hidden">
-          <div className="flex items-center justify-between px-6 py-4 border-b border-border">
-            <h3 className="font-display text-base font-bold text-foreground">Pending Assignments</h3>
-            <Button asChild variant="ghost" size="sm" className="text-primary text-xs">
-              <Link href="/director/assignments">View All</Link>
-            </Button>
-          </div>
-          <div className="divide-y divide-border">
-            {pendingAssignments.map((req) => (
-              <div key={req.id} className="flex items-center justify-between px-6 py-4 hover:bg-muted/50 transition-colors">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-foreground">{req.id}</span>
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
-                      req.priority === "high" ? "bg-destructive/10 text-destructive" : "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400"
-                    }`}>{req.priority}</span>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Pipeline Visualization */}
+        <div className="lg:col-span-2 space-y-6">
+          <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest flex items-center gap-3">
+            <Activity className="h-5 w-5 text-primary" />
+            Mission Pipeline
+          </h2>
+          <div className="glass-card p-10">
+            <div className="flex items-end justify-between gap-4 h-48">
+              {pipeline.map((p) => (
+                <div key={p.stage} className="flex-1 flex flex-col items-center gap-4 group">
+                  <div className="relative w-full flex flex-col items-center">
+                    <span className="text-xs font-black text-foreground mb-2 transition-transform group-hover:-translate-y-1">{p.count}</span>
+                    <div 
+                      className={cn("w-full rounded-2xl transition-all duration-500 group-hover:brightness-110 group-hover:shadow-lg", p.color)} 
+                      style={{ height: `${(p.count / 7) * 120}px` }} 
+                    />
                   </div>
-                  <p className="text-sm text-muted-foreground mt-0.5">{req.program} — {req.org}</p>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 text-center leading-tight h-8 flex items-center">{p.stage}</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <Button variant="gold" size="sm" className="text-xs">Assign Staff</Button>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-4 pt-4">
+            <div className="flex items-center justify-between">
+              <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest">Awaiting Assignment</h2>
+              <Button variant="ghost" className="text-[10px] font-black uppercase tracking-widest text-primary">View Full Queue</Button>
+            </div>
+            {[
+              { id: "TRQ-0044", org: "Ghana Space Agency", program: "Satellite Data Processing", priority: "high" },
+              { id: "TRQ-0041", org: "South Africa SANSA", program: "Remote Sensing Advanced", priority: "high" },
+            ].map((req) => (
+              <div key={req.id} className="glass-card p-8 group transition-all duration-500 hover:border-primary/30">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div className="flex items-start gap-5">
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-muted/50 group-hover:bg-primary/10 transition-colors text-muted-foreground group-hover:text-primary">
+                      <UserCheck className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-3 mb-1.5">
+                        <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">{req.id}</span>
+                        <span className="px-2 py-0.5 rounded-full bg-destructive/10 text-[8px] font-black uppercase tracking-widest text-destructive animate-pulse">Priority Alpha</span>
+                      </div>
+                      <h3 className="font-display text-xl font-black text-foreground tracking-tight">{req.program}</h3>
+                      <p className="text-sm font-medium text-muted-foreground mt-1">{req.org}</p>
+                    </div>
+                  </div>
+                  <Button variant="gold" className="h-11 rounded-xl px-8 font-bold text-[10px] uppercase tracking-widest shadow-lg shadow-primary/20">Assign Mission Staff</Button>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Right Column */}
-        <div className="space-y-6">
-          {/* Staff Quick View */}
-          <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-border">
-              <h3 className="font-display text-base font-bold text-foreground">Staff Workload</h3>
-            </div>
-            <div className="divide-y divide-border">
-              {staffOverview.map((s) => (
-                <div key={s.name} className="px-5 py-3">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-foreground">{s.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{s.role}</p>
+        {/* Right Sidebar - Staff & Escalations */}
+        <div className="space-y-8">
+          <div className="space-y-6">
+            <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest">Resource Load</h2>
+            <div className="glass-card overflow-hidden">
+              <div className="divide-y divide-border/50">
+                {[
+                  { name: "Meseret Hailu", role: "Supervisor", load: 60 },
+                  { name: "Dawit Kebede", role: "Negotiator", load: 80 },
+                  { name: "Tigist Alemayehu", role: "Supervisor", load: 40 },
+                  { name: "Henok Girma", role: "Negotiator", load: 100 },
+                ].map((s) => (
+                  <div key={s.name} className="p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <div>
+                        <p className="text-sm font-bold text-foreground leading-tight">{s.name}</p>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/60 mt-1">{s.role}</p>
+                      </div>
+                      <span className={cn(
+                        "text-[10px] font-black uppercase tracking-widest",
+                        s.load >= 90 ? "text-destructive" : s.load >= 70 ? "text-amber-500" : "text-emerald-500"
+                      )}>{s.load}% Load</span>
                     </div>
-                    <span className={`rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                      s.status === "available" ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400"
-                        : s.status === "busy" ? "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-400"
-                        : "bg-destructive/10 text-destructive"
-                    }`}>{s.activeRequests}/{s.capacity}</span>
+                    <div className="h-1.5 w-full rounded-full bg-muted/50 overflow-hidden">
+                      <div 
+                        className={cn(
+                          "h-full rounded-full transition-all duration-1000",
+                          s.load >= 90 ? "bg-destructive shadow-[0_0_8px_rgba(239,68,68,0.4)]" : s.load >= 70 ? "bg-amber-500" : "bg-primary"
+                        )} 
+                        style={{ width: `${s.load}%` }} 
+                      />
+                    </div>
                   </div>
-                  <div className="mt-2 h-1.5 w-full rounded-full bg-muted">
-                    <div
-                      className={`h-full rounded-full ${s.status === "full" ? "bg-destructive" : "bg-primary"}`}
-                      style={{ width: `${(s.activeRequests / s.capacity) * 100}%` }}
-                    />
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
 
-          {/* Escalations */}
-          <div className="glass-card overflow-hidden">
-            <div className="px-5 py-4 border-b border-border">
-              <h3 className="font-display text-base font-bold text-foreground flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 text-amber-500" />
-                Escalations
-              </h3>
-            </div>
-            <div className="divide-y divide-border">
-              {escalations.map((e, i) => (
-                <div key={i} className="px-5 py-3 hover:bg-muted/50 transition-colors cursor-pointer">
-                  <p className="text-sm text-foreground leading-snug">{e.text}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{e.time}</p>
+          <div className="space-y-6">
+            <h2 className="font-display text-xl font-black text-foreground uppercase tracking-widest text-amber-500 flex items-center gap-3">
+              <AlertTriangle className="h-5 w-5" />
+              Escalations
+            </h2>
+            <div className="glass-card divide-y divide-border/50">
+              {[
+                { text: "TRQ-0039 pending executive review > 5 days", time: "2h ago" },
+                { name: "Henok Girma", text: "Capacity reached — Reassignment required", time: "1d ago" },
+              ].map((e, i) => (
+                <div key={i} className="p-6 hover:bg-muted/30 transition-colors cursor-pointer group">
+                  <p className="text-xs font-bold text-foreground leading-relaxed group-hover:text-primary transition-colors">{e.text}</p>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground/40 mt-3">{e.time}</p>
                 </div>
               ))}
             </div>
@@ -170,3 +175,5 @@ export default function DirectorDashboard() {
     </div>
   );
 }
+
+import { cn } from "@/lib/utils";
