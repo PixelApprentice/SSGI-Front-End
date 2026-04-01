@@ -39,125 +39,130 @@ export default function Login() {
   return (
     <div className="flex min-h-screen">
       {/* Left - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-[hsl(var(--navy-deep))] p-12">
-        <div className="flex items-center justify-between">
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between bg-[hsl(var(--navy-deep))] p-12 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-50" />
+        <div className="flex items-center justify-between relative z-10">
           <div className="flex items-center gap-3">
-            <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-12 w-auto" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 backdrop-blur-xl ring-1 ring-primary/30">
+              <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-6 w-6" />
+            </div>
             <div>
-              <span className="font-display text-lg font-bold text-[hsl(39,42%,55%)] block leading-tight">SSGI</span>
-              <span className="text-xs uppercase tracking-widest text-white/50">Training Portal</span>
+              <span className="font-display text-xl font-bold gold-text block leading-tight tracking-tight">SSGI Orbit</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium">Enterprise Training</span>
             </div>
           </div>
           {mounted && (
             <button 
               type="button" 
               onClick={() => setTheme(theme === "light" ? "dark" : "light")} 
-              className="rounded-lg p-2 text-white/50 hover:text-white/80 transition-all"
+              className="rounded-xl p-2.5 bg-white/5 border border-white/10 text-white/50 hover:text-white/80 hover:bg-white/10 transition-all duration-300"
             >
-              {theme === "light" ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
+              {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
             </button>
           )}
         </div>
 
-        <div className="max-w-md">
-          <h1 className="font-display text-4xl font-bold text-white mb-4">
-            Welcome to the <span className="text-[hsl(39,42%,55%)]">Training</span> Portal
-          </h1>
-          <p className="text-white/60 leading-relaxed">
-            Access your training programs, track negotiations, manage agreements,
-            and monitor active deployments — all from one secure platform.
-          </p>
-          <div className="mt-8 space-y-3">
-            <p className="text-xs uppercase tracking-widest text-white/40 mb-2">Role Hierarchy</p>
-            <div className="flex flex-col gap-1">
-              <p className="text-xs text-[hsl(39,42%,55%)]/80 font-medium">
-                Client → DG → Training Director → Supervisor → Negotiator
-              </p>
-            </div>
+        <div className="max-w-md relative z-10">
+          <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary mb-6">
+            <Shield className="h-3 w-3" />
+            Secure Enterprise Gateway
           </div>
+          <h1 className="font-display text-5xl font-extrabold text-white mb-6 leading-tight tracking-tight">
+            Elevate Your <span className="gold-text">Operational</span> Capabilities
+          </h1>
+          <p className="text-white/60 text-lg leading-relaxed font-medium">
+            Access elite satellite training programs, track complex negotiations, and manage your mission-critical agreements from one secure hub.
+          </p>
         </div>
 
-        <div className="flex items-center gap-2 text-xs text-white/40">
-          <Shield className="h-4 w-4 text-[hsl(39,42%,55%)]" />
-          <span>AES-256 Encrypted · SOC 2 Compliant · ISO 27001 Certified</span>
+        <div className="flex items-center gap-4 relative z-10">
+          <div className="flex items-center gap-2 text-xs font-semibold text-white/40 uppercase tracking-widest">
+            <Shield className="h-4 w-4 text-primary" />
+            <span>Secure Access Control</span>
+          </div>
+          <div className="h-1 w-1 rounded-full bg-white/20" />
+          <div className="text-xs font-semibold text-white/40 uppercase tracking-widest">
+            <span>SOC 2 Type II</span>
+          </div>
         </div>
       </div>
 
       {/* Right - Form */}
-      <div className="flex-1 flex items-center justify-center bg-background p-8">
-        <div className="w-full max-w-sm">
-          <div className="lg:hidden flex items-center gap-3 mb-10 justify-center">
-            <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-12 w-auto" />
-            <span className="font-display text-lg font-bold gold-text">SSGI Portal</span>
+      <div className="flex-1 flex items-center justify-center bg-background p-8 transition-colors duration-500">
+        <div className="w-full max-w-sm animate-fade-in">
+          <div className="lg:hidden flex items-center gap-3 mb-12 justify-center">
+            <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-10 w-10" />
+            <span className="font-display text-xl font-bold gold-text tracking-tight">SSGI Orbit</span>
           </div>
 
-          {/* Role Selection */}
-          <div className="mb-6">
-            <p className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Select Role</p>
-            <div className="grid grid-cols-3 gap-2">
-              {mounted && roles.map((role) => (
-                <button
-                  key={role.id}
-                  type="button"
-                  onClick={() => handleRoleSelection(role.id)}
-                  className={`rounded-lg border px-3 py-2 text-xs font-medium transition-all ${
-                    selectedRole === role.id
-                      ? "border-primary bg-primary/10 text-primary"
-                      : "border-border text-muted-foreground hover:bg-muted/50"
-                  }`}
-                >
-                  {role.label}
-                </button>
-              ))}
-            </div>
+          <div className="mb-10">
+            <h2 className="font-display text-3xl font-extrabold text-foreground mb-2 tracking-tight">Sign In</h2>
+            <p className="text-sm text-muted-foreground font-medium">
+              Enter your credentials to access the portal
+            </p>
           </div>
 
-          <h2 className="font-display text-2xl font-bold text-foreground mb-1">Sign In</h2>
-          <p className="text-sm text-muted-foreground mb-8">
-            Sign in as <strong className="text-foreground">{currentRole.label}</strong> — {currentRole.description}
-          </p>
-
-          <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+          <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="space-y-2">
-              <Label className="text-xs uppercase tracking-wider text-muted-foreground">Email Address</Label>
+              <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70 ml-1">Account Identifier</Label>
               <Input
                 type="email"
-                placeholder="you@organization.gov"
-                className="bg-card border-border"
+                placeholder="identifier@ssgi.gov.et"
+                className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm focus:ring-primary/20 transition-all"
               />
             </div>
 
             <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label className="text-xs uppercase tracking-wider text-muted-foreground">Password</Label>
-                <button type="button" className="text-xs text-primary hover:underline">Forgot password?</button>
+              <div className="flex items-center justify-between ml-1">
+                <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70">Access Key</Label>
+                <button type="button" className="text-[10px] uppercase tracking-widest font-bold text-primary hover:text-primary/80 transition-colors">Recover Access</button>
               </div>
               <div className="relative">
                 <Input
                   type={showPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="bg-card border-border pr-10"
+                  className="h-12 bg-muted/30 border-border/50 rounded-xl px-4 text-sm pr-12 focus:ring-primary/20 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground/50 hover:text-foreground transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
             </div>
 
-            <Button asChild variant="gold" className="w-full mt-2">
+            {/* Role Selection (Simplified/Hidable for production, but kept here for demo with better styling) */}
+            <div className="space-y-3 pt-2">
+              <Label className="text-[10px] uppercase tracking-[0.2em] font-bold text-muted-foreground/70 ml-1">System Role</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {mounted && roles.map((role) => (
+                  <button
+                    key={role.id}
+                    type="button"
+                    onClick={() => handleRoleSelection(role.id)}
+                    className={`rounded-xl border px-3 py-2.5 text-xs font-bold transition-all duration-300 ${
+                      selectedRole === role.id
+                        ? "border-primary bg-primary/10 text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]"
+                        : "border-border/50 text-muted-foreground/60 hover:bg-muted/50 hover:text-foreground"
+                    }`}
+                  >
+                    {role.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <Button asChild variant="gold" className="w-full h-14 rounded-xl text-sm font-bold shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all duration-300 mt-4">
               <Link href={currentRole.path}>
-                Sign In as {currentRole.label}
+                Authorize Access
               </Link>
             </Button>
           </form>
 
-          <p className="mt-8 text-center text-xs text-muted-foreground">
-            Don't have an account?{" "}
-            <Link href="/apply" className="text-primary hover:underline font-medium">Request Access</Link>
+          <p className="mt-10 text-center text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+            Secure Gateway Access Only
           </p>
         </div>
       </div>

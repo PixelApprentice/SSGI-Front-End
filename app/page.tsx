@@ -36,22 +36,24 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/30 bg-background/80 backdrop-blur-xl">
-        <div className="container mx-auto flex h-16 items-center justify-between px-6">
-          <Link href="/" className="flex items-center gap-3">
-            <img src="/assets/ssgi-logo.png" alt="SSGI Logo" className="h-10 w-10" />
-            <span className="font-display text-lg font-bold gold-text">SSGI Training Portal</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/10 bg-background/60 backdrop-blur-2xl">
+        <div className="container mx-auto flex h-20 items-center justify-between px-8">
+          <Link href="/" className="flex items-center gap-4 group">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 transition-transform group-hover:scale-110">
+              <img src="/assets/ssgi-logo.png" alt="SSGI Logo" className="h-6 w-6" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display text-lg font-bold gold-text leading-tight tracking-tight">SSGI Orbit</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-semibold">Training Enterprise</span>
+            </div>
           </Link>
-          <div className="flex items-center gap-4">
-            <Button asChild variant="ghost" className="text-muted-foreground hover:text-foreground">
-              <Link href="/login">
-                Login
-              </Link>
+          <div className="flex items-center gap-6">
+            <Button asChild variant="ghost" className="text-xs font-bold uppercase tracking-widest text-muted-foreground hover:text-foreground">
+              <Link href="/login">Portal Access</Link>
             </Button>
-            <Button asChild variant="gold" size="lg">
+            <Button asChild variant="gold" className="rounded-xl px-8 h-11 font-bold text-xs uppercase tracking-widest shadow-lg shadow-primary/20">
               <Link href="/apply">
-                Initiate Training
-                <ArrowRight className="ml-1 h-4 w-4" />
+                Initiate Program
               </Link>
             </Button>
           </div>
@@ -59,39 +61,40 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
-        <img
-          src="/assets/hero-space.jpg"
-          alt="Satellite in orbit"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="hero-overlay absolute inset-0" />
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/assets/hero-space.jpg"
+            alt="Space infrastructure"
+            className="h-full w-full object-cover scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/20 via-background/80 to-background" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-background/40 to-background" />
+        </div>
 
-        <div className="relative z-10 container mx-auto px-6 text-center">
-          <div className="mx-auto max-w-3xl animate-slide-up">
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2 text-sm text-primary">
-              <Satellite className="h-4 w-4" />
-              Government Space Agency Training Platform
+        <div className="relative z-10 container mx-auto px-8 text-center">
+          <div className="mx-auto max-w-4xl animate-slide-up">
+            <div className="mb-8 inline-flex items-center gap-3 rounded-full border border-primary/20 bg-primary/5 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary backdrop-blur-md">
+              <Satellite className="h-3.5 w-3.5" />
+              Strategic Space Technology Infrastructure
             </div>
-            <h1 className="mb-6 font-display text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">
-              <span className="text-foreground">Elevate Your</span>
+            <h1 className="mb-8 font-display text-6xl font-black leading-[1.1] tracking-tight md:text-8xl">
+              <span className="text-foreground">Advance Your</span>
               <br />
-              <span className="gold-text">Space Capabilities</span>
+              <span className="gold-text">Orbital Intelligence</span>
             </h1>
-            <p className="mx-auto mb-10 max-w-xl text-lg text-muted-foreground leading-relaxed">
-              Access elite satellite operations training through SSGI's secure portal. 
-              Submit requests, negotiate agreements, and track your program — all in one place.
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-muted-foreground/80 leading-relaxed font-medium">
+              Access the continent's most advanced satellite operations and remote sensing curriculum through SSGI's unified digital ecosystem.
             </p>
-            <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <Button asChild variant="gold" size="lg" className="h-14 px-10 text-base">
+            <div className="flex flex-col items-center justify-center gap-6 sm:flex-row">
+              <Button asChild variant="gold" size="lg" className="h-16 px-12 rounded-2xl text-xs font-bold uppercase tracking-[0.2em] shadow-xl shadow-primary/20">
                 <Link href="/apply">
-                  Initiate Training Request
-                  <ArrowRight className="ml-2 h-5 w-5" />
+                  Start Training Request
                 </Link>
               </Button>
-              <Button asChild variant="gold-outline" size="lg" className="h-14 px-10 text-base">
+              <Button asChild variant="outline" size="lg" className="h-16 px-12 rounded-2xl border-border/50 bg-background/50 backdrop-blur-md text-xs font-bold uppercase tracking-[0.2em] hover:bg-background/80">
                 <Link href="/login">
-                  Access Dashboard
+                  Enter Dashboard
                 </Link>
               </Button>
             </div>
@@ -100,13 +103,13 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Bar */}
-      <section className="relative z-10 -mt-16">
-        <div className="container mx-auto px-6">
-          <div className="glass-card mx-auto grid max-w-4xl grid-cols-2 gap-6 p-8 md:grid-cols-4">
+      <section className="relative z-10 -mt-20">
+        <div className="container mx-auto px-8">
+          <div className="glass-card mx-auto grid max-w-5xl grid-cols-2 gap-8 p-10 md:grid-cols-4 ring-1 ring-white/10">
             {stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="font-display text-3xl font-bold gold-text">{stat.value}</div>
-                <div className="mt-1 text-sm text-muted-foreground">{stat.label}</div>
+              <div key={stat.label} className="text-center group">
+                <div className="font-display text-4xl font-black gold-text mb-1 transition-transform group-hover:scale-110">{stat.value}</div>
+                <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -114,28 +117,49 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="mb-16 text-center">
-            <h2 className="font-display text-3xl font-bold md:text-4xl">
-              <span className="gold-text">World-Class</span>{" "}
-              <span className="text-foreground">Training Infrastructure</span>
+      <section className="py-32">
+        <div className="container mx-auto px-8">
+          <div className="mb-20 text-center">
+            <h2 className="font-display text-4xl font-black md:text-5xl tracking-tight">
+              <span className="gold-text">Standardized</span>{" "}
+              <span className="text-foreground">Training Flow</span>
             </h2>
-            <p className="mx-auto mt-4 max-w-lg text-muted-foreground">
-              Everything you need to manage space technology training programs with precision and excellence.
+            <p className="mx-auto mt-6 max-w-xl text-muted-foreground/70 font-medium">
+              A professional framework designed for national space agencies and specialized research institutions.
             </p>
           </div>
-          <div className="mx-auto grid max-w-5xl gap-6 md:grid-cols-2">
-            {features.map((feature, i) => (
+          <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
+            {[
+              {
+                icon: Rocket,
+                title: "Orbital Operations",
+                description: "Specialized training modules for satellite ground station control and telemetry management.",
+              },
+              {
+                icon: Shield,
+                title: "Unified Compliance",
+                description: "Standardized agreement pipelines ensuring all training protocols meet international space law.",
+              },
+              {
+                icon: GraduationCap,
+                title: "Accredited Tracks",
+                description: "Curriculum designed by SSGI senior mission specialists with industry-recognized certifications.",
+              },
+              {
+                icon: Users,
+                title: "Expert Mentorship",
+                description: "Direct access to mission specialists during critical training milestones and evaluations.",
+              },
+            ].map((feature, i) => (
               <div
                 key={feature.title}
-                className="glass-card group p-8 transition-all duration-300 hover:border-primary/40 hover:shadow-[0_0_30px_hsl(39_42%_55%/0.1)]"
+                className="glass-card group p-10 transition-all duration-500 hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5"
               >
-                <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-                  <feature.icon className="h-6 w-6 text-primary" />
+                <div className="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 transition-transform group-hover:rotate-6">
+                  <feature.icon className="h-7 w-7 text-primary" />
                 </div>
-                <h3 className="mb-2 font-display text-xl font-bold text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <h3 className="mb-3 font-display text-2xl font-black text-foreground tracking-tight">{feature.title}</h3>
+                <p className="text-muted-foreground/70 leading-relaxed font-medium">{feature.description}</p>
               </div>
             ))}
           </div>
