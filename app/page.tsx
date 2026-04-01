@@ -14,23 +14,23 @@ export default function LandingPage() {
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/10 bg-background/60 backdrop-blur-2xl transition-all duration-500 hover:bg-background/80">
-        <div className="container mx-auto flex h-20 items-center justify-between px-8">
-          <Link href="/" className="flex items-center gap-4 group">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/30 ring-1 ring-primary/20">
-              <img src="/assets/ssgi-logo.png" alt="SSGI Logo" className="h-6 w-6" />
+        <div className="container mx-auto flex h-24 items-center justify-between px-8">
+          <Link href="/" className="flex items-center gap-5 group">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/20 transition-all duration-500 group-hover:scale-110 group-hover:bg-primary/30 ring-2 ring-primary/20 shadow-2xl shadow-primary/20">
+              <img src="/assets/ssgi-logo.png" alt="SSGI Logo" className="h-10 w-10 object-contain" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-lg font-black gold-text leading-tight tracking-tighter uppercase italic">SSGI Orbit</span>
-              <span className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground font-black opacity-60">Operations Command</span>
+              <span className="font-display text-2xl font-black gold-text leading-none tracking-tighter uppercase italic">SSGI Orbit</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground font-black opacity-70 mt-1">Training Request Authority</span>
             </div>
           </Link>
-          <div className="flex items-center gap-8">
-            <Link href="/login" className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors">
-              Access Terminal
+          <div className="flex items-center gap-10">
+            <Link href="/login" className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground hover:text-primary transition-colors">
+              Management Terminal
             </Link>
-            <Button asChild variant="gold" className="rounded-xl px-10 h-12 font-black text-[10px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/20 hover:shadow-primary/40 transition-all active:scale-95">
+            <Button asChild variant="gold" className="rounded-2xl px-12 h-14 font-black text-[11px] uppercase tracking-[0.3em] shadow-2xl shadow-primary/30 hover:shadow-primary/50 transition-all active:scale-95">
               <Link href="/apply">
-                Initiate Protocol
+                Request Training
               </Link>
             </Button>
           </div>
