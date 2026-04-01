@@ -7,7 +7,7 @@ import { LogOut, Bell, Search, User as UserIcon, Menu } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 import { cn } from "@/lib/utils";
 import React, { useState } from "react";
-import { getNavItemsForRole, Role } from "@/lib/navigation-config";
+import { getNavItemsForRole, Role, getRoleLabel } from "@/lib/navigation-config";
 
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
@@ -42,6 +42,7 @@ export default function AdminLayout({
   }
 
   const navItems = getNavItemsForRole(user.role);
+  const roleLabel = getRoleLabel(user.role);
 
   const isActive = (path: string) => {
     if (path === "/" || path === "") return pathname === path;
@@ -66,7 +67,7 @@ export default function AdminLayout({
               <div className="flex flex-col">
                 <span className="font-display text-sm font-bold text-sidebar-primary leading-tight tracking-tight">SSGI Orbit</span>
                 <span className="text-[10px] uppercase tracking-[0.2em] text-sidebar-foreground/40 font-bold truncate w-40">
-                  Secure Workspace
+                  {roleLabel}
                 </span>
               </div>
             )}
@@ -145,7 +146,7 @@ export default function AdminLayout({
             <div className="flex items-center gap-3 pl-4 border-l border-border/50">
               <div className="text-right hidden sm:block">
                 <p className="text-sm font-black text-foreground leading-tight">{user.name}</p>
-                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">Authorized Access</p>
+                <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground font-bold">{roleLabel}</p>
               </div>
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10 text-xs font-black text-primary ring-1 ring-primary/20 shadow-inner">
                 {user.initials}
@@ -156,6 +157,10 @@ export default function AdminLayout({
 
         <main className="flex-1 p-8 overflow-y-auto">
           <div className="mx-auto max-w-7xl">
+            <div className="mb-8">
+              <h2 className="font-display text-xs font-black uppercase tracking-[0.3em] text-primary/60 mb-1">{roleLabel}</h2>
+              <div className="h-1 w-12 bg-primary/20 rounded-full" />
+            </div>
             {children}
           </div>
         </main>

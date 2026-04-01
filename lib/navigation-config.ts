@@ -8,7 +8,8 @@ import {
   Briefcase,
   MessageSquare,
   ClipboardList,
-  History
+  History,
+  GraduationCap
 } from "lucide-react";
 
 export type Role = 'admin' | 'dg' | 'director' | 'supervisor' | 'negotiator' | 'client';
@@ -22,22 +23,10 @@ export interface NavItem {
 
 export const NAV_ITEMS: NavItem[] = [
   {
-    title: "Workspace",
-    href: "/dashboard", // This will be mapped to role root
+    title: "Dashboard",
+    href: "/dashboard",
     icon: LayoutDashboard,
     roles: ['admin', 'dg', 'director', 'supervisor', 'negotiator'],
-  },
-  {
-    title: "Approvals",
-    href: "/approvals",
-    icon: FileCheck,
-    roles: ['dg', 'admin'],
-  },
-  {
-    title: "Personnel",
-    href: "/staff",
-    icon: Users,
-    roles: ['admin', 'director'],
   },
   {
     title: "Missions",
@@ -46,25 +35,43 @@ export const NAV_ITEMS: NavItem[] = [
     roles: ['admin', 'director', 'dg'],
   },
   {
-    title: "Negotiations",
-    href: "/negotiations",
-    icon: Briefcase,
-    roles: ['negotiator', 'supervisor', 'admin'],
+    title: "Executive Approvals",
+    href: "/approvals",
+    icon: FileCheck,
+    roles: ['dg', 'admin'],
   },
   {
-    title: "Channels",
+    title: "Active Trainings",
+    href: "/training",
+    icon: GraduationCap,
+    roles: ['supervisor', 'admin', 'director'],
+  },
+  {
+    title: "Negotiation Deals",
+    href: "/deals",
+    icon: Briefcase,
+    roles: ['negotiator', 'admin'],
+  },
+  {
+    title: "Technical Comms",
     href: "/comms",
     icon: MessageSquare,
     roles: ['negotiator', 'admin'],
   },
   {
-    title: "Ledger",
-    href: "/agreements",
-    icon: FileText,
-    roles: ['dg', 'admin', 'director', 'supervisor'],
+    title: "Personnel Intelligence",
+    href: "/staff",
+    icon: Users,
+    roles: ['admin', 'director', 'supervisor'],
   },
   {
-    title: "Analytics",
+    title: "Technical Ledger",
+    href: "/agreements",
+    icon: FileText,
+    roles: ['dg', 'admin', 'director', 'negotiator'],
+  },
+  {
+    title: "System Analytics",
     href: "/reports",
     icon: BarChart3,
     roles: ['admin', 'dg', 'director'],
@@ -73,7 +80,7 @@ export const NAV_ITEMS: NavItem[] = [
     title: "Audit Trail",
     href: "/history",
     icon: History,
-    roles: ['supervisor', 'admin', 'director'],
+    roles: ['admin', 'dg'],
   },
   {
     title: "User Control",
@@ -95,12 +102,23 @@ export const getNavItemsForRole = (role: Role) => {
   return NAV_ITEMS.filter(item => item.roles.includes(role)).map(item => {
     let href = item.href;
     
-    // Map Workspace to the root of the role
     if (href === "/dashboard") {
       return { ...item, href: roleRoot };
     }
     
-    // Prefix other routes with role root to ensure isolation
+    // Prefix other routes with role root
     return { ...item, href: `${roleRoot}${href}` };
   });
+};
+
+export const getRoleLabel = (role: Role): string => {
+  const labels: Record<Role, string> = {
+    admin: "System Administrator",
+    dg: "Director General",
+    director: "Training Director",
+    supervisor: "Operations Supervisor",
+    negotiator: "Lead Negotiator",
+    client: "Client Representative"
+  };
+  return labels[role];
 };
