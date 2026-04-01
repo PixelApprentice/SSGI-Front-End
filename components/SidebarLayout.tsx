@@ -56,11 +56,13 @@ export default function SidebarLayout({
     <div className="flex min-h-screen bg-background">
       {/* Sidebar */}
       <aside className="fixed left-0 top-0 z-40 flex h-screen w-56 flex-col border-r border-border/30 bg-[hsl(var(--navy-deep))]">
-        <div className="flex h-16 items-center gap-3 border-b border-white/10 px-5">
-          <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-8 w-8" />
-          <div>
-            <span className="font-display text-sm font-bold text-[hsl(39,42%,55%)] block leading-tight">SSGI</span>
-            <span className="text-[10px] uppercase tracking-widest text-white/50">{portalName}</span>
+        <div className="flex h-20 items-center gap-4 border-b border-white/5 px-6">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/20 ring-1 ring-primary/30">
+            <img src="/assets/ssgi-logo.png" alt="SSGI" className="h-7 w-7 object-contain" />
+          </div>
+          <div className="flex flex-col">
+            <span className="font-display text-lg font-black gold-text leading-none tracking-tighter uppercase italic">SSGI Orbit</span>
+            <span className="text-[8px] uppercase tracking-[0.2em] text-white/40 font-black mt-1">{portalName}</span>
           </div>
         </div>
 

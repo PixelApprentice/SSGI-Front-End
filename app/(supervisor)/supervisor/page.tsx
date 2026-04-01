@@ -10,8 +10,8 @@ export default function SupervisorDashboard() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-display text-4xl font-black text-foreground tracking-tight">Operations Supervisor</h1>
-        <p className="text-muted-foreground font-medium mt-2">Managing agreement oversight and mission readiness verification.</p>
+        <h1 className="font-display text-5xl font-black text-white mb-2 leading-tight tracking-tighter uppercase italic">Operations Supervisor</h1>
+        <p className="text-white/50 text-[10px] font-black uppercase tracking-[0.4em]">Managing agreement oversight and mission readiness verification.</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

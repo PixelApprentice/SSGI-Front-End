@@ -33,8 +33,8 @@ export default function DirectorDashboard() {
     <div className="space-y-10 animate-fade-in">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="font-display text-4xl font-black text-foreground tracking-tight">Operations Hub</h1>
-          <p className="text-muted-foreground font-medium mt-2">Training Director — Central Mission Orchestration</p>
+          <h1 className="font-display text-5xl font-black text-white mb-2 leading-tight tracking-tighter uppercase italic">Operations Hub</h1>
+          <p className="text-white/50 text-[10px] font-black uppercase tracking-[0.4em]">Training Director — Central Mission Orchestration</p>
         </div>
         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
           <LayoutGrid className="h-6 w-6 text-primary" />

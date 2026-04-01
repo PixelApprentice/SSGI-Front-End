@@ -56,12 +56,12 @@ export default function LandingPage() {
               Official Institutional Training Gateway
             </div>
             
-            <h1 className="font-display text-7xl font-black leading-[0.95] tracking-tighter md:text-[9rem] animate-slide-up">
-              <span className="text-foreground">AUTHORIZE</span>
+            <h1 className="font-display text-7xl font-black leading-[0.95] tracking-tighter md:text-[9rem] animate-slide-up uppercase italic">
+              <span className="text-foreground">Authorize Your</span>
               <br />
-              <span className="gold-text italic text-[1.1em]">YOUR MISSION</span>
+              <span className="gold-text">Mission</span>
               <br />
-              <span className="text-foreground">CAPACITY.</span>
+              <span className="text-foreground">Capacity</span>
             </h1>
 
             <p className="mx-auto max-w-2xl text-xl text-muted-foreground/80 leading-relaxed font-bold tracking-tight opacity-0 animate-fade-in [animation-delay:400ms]">
