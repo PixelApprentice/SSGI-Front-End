@@ -7,6 +7,7 @@ import { useState } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
+import { AuthProvider } from "@/hooks/use-auth";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -19,11 +20,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
         enableSystem
         disableTransitionOnChange
       >
-        <TooltipProvider>
-          {children}
-          <Toaster />
-          <Sonner />
-        </TooltipProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            {children}
+            <Toaster />
+            <Sonner />
+          </TooltipProvider>
+        </AuthProvider>
       </NextThemesProvider>
     </QueryClientProvider>
   );

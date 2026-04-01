@@ -1,5 +1,14 @@
 import { Clock, CheckCircle2, AlertCircle, Handshake, MessageSquare } from "lucide-react";
 
+export const users = [
+  { email: "admin@ssgi.gov.et", password: "password", role: "admin", name: "System Admin", initials: "SA" },
+  { email: "dg@ssgi.gov.et", password: "password", role: "dg", name: "Prof. Solomon Belay", initials: "SB" },
+  { email: "director@ssgi.gov.et", password: "password", role: "director", name: "Dr. Abebe Tadesse", initials: "AT" },
+  { email: "supervisor@ssgi.gov.et", password: "password", role: "supervisor", name: "Meseret Hailu", initials: "MH" },
+  { email: "negotiator@ssgi.gov.et", password: "password", role: "negotiator", name: "Dawit Kebede", initials: "DK" },
+  { email: "client@agency.gov", password: "password", role: "client", name: "Mohammed Ahmed", initials: "MA" },
+];
+
 export const requests = [
   { id: "TRQ-2026-0042", program: "Satellite Operations & Control", org: "Kenya Space Agency", status: "negotiation", date: "2026-03-15", stage: "Technical Review" },
   { id: "TRQ-2026-0038", program: "Remote Sensing & GIS", org: "Nigerian NASRDA", status: "agreed", date: "2026-02-20", stage: "Agreement Signed" },
